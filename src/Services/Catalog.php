@@ -3,41 +3,68 @@
 namespace rabbit\consul\Services;
 
 use rabbit\consul\Client;
+use rabbit\consul\ConsulResponse;
 use rabbit\consul\OptionsResolver;
 
+/**
+ * Class Catalog
+ * @package rabbit\consul\Services
+ */
 final class Catalog implements CatalogInterface
 {
+    /**
+     * @var Client
+     */
     private $client;
 
+    /**
+     * Catalog constructor.
+     * @param Client|null $client
+     */
     public function __construct(Client $client = null)
     {
         $this->client = $client ?: new Client();
     }
 
-    public function register($node)
+    /**
+     * @param $node
+     * @return ConsulResponse
+     */
+    public function register($node): ConsulResponse
     {
         $params = array(
-            'body' => (string) $node,
+            'body' => (string)$node,
         );
 
         return $this->client->get('/v1/catalog/register', $params);
     }
 
-    public function deregister($node)
+    /**
+     * @param $node
+     * @return ConsulResponse
+     */
+    public function deregister($node): ConsulResponse
     {
         $params = array(
-            'body' => (string) $node,
+            'body' => (string)$node,
         );
 
         return $this->client->get('/v1/catalog/deregister', $params);
     }
 
-    public function datacenters()
+    /**
+     * @return ConsulResponse
+     */
+    public function datacenters(): ConsulResponse
     {
         return $this->client->get('/v1/catalog/datacenters');
     }
 
-    public function nodes(array $options = array())
+    /**
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function nodes(array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
@@ -46,16 +73,25 @@ final class Catalog implements CatalogInterface
         return $this->client->get('/v1/catalog/nodes', $params);
     }
 
-    public function node($node, array $options = array())
+    /**
+     * @param $node
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function node($node, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
         );
 
-        return $this->client->get('/v1/catalog/node/'.$node, $params);
+        return $this->client->get('/v1/catalog/node/' . $node, $params);
     }
 
-    public function services(array $options = array())
+    /**
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function services(array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
@@ -64,12 +100,17 @@ final class Catalog implements CatalogInterface
         return $this->client->get('/v1/catalog/services', $params);
     }
 
-    public function service($service, array $options = array())
+    /**
+     * @param $service
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function service($service, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc', 'tag')),
         );
 
-        return $this->client->get('/v1/catalog/service/'.$service, $params);
+        return $this->client->get('/v1/catalog/service/' . $service, $params);
     }
 }

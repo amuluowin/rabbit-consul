@@ -3,18 +3,35 @@
 namespace rabbit\consul\Services;
 
 use rabbit\consul\Client;
+use rabbit\consul\ConsulResponse;
 use rabbit\consul\OptionsResolver;
 
+/**
+ * Class KV
+ * @package rabbit\consul\Services
+ */
 final class KV implements KVInterface
 {
+    /**
+     * @var Client
+     */
     private $client;
 
+    /**
+     * KV constructor.
+     * @param Client|null $client
+     */
     public function __construct(Client $client = null)
     {
         $this->client = $client ?: new Client();
     }
 
-    public function get($key, array $options = array())
+    /**
+     * @param $key
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function get($key, array $options = array()):ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc', 'recurse', 'keys', 'separator', 'raw')),
@@ -23,7 +40,13 @@ final class KV implements KVInterface
         return $this->client->get('v1/kv/'.$key, $params);
     }
 
-    public function put($key, $value, array $options = array())
+    /**
+     * @param $key
+     * @param $value
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function put($key, $value, array $options = array()):ConsulResponse
     {
         $params = array(
             'body' => $value,
@@ -33,7 +56,12 @@ final class KV implements KVInterface
         return $this->client->put('v1/kv/'.$key, $params);
     }
 
-    public function delete($key, array $options = array())
+    /**
+     * @param $key
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function delete($key, array $options = array()):ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc', 'recurse')),

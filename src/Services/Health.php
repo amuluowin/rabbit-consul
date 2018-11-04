@@ -3,50 +3,82 @@
 namespace rabbit\consul\Services;
 
 use rabbit\consul\Client;
+use rabbit\consul\ConsulResponse;
 use rabbit\consul\OptionsResolver;
 
+/**
+ * Class Health
+ * @package rabbit\consul\Services
+ */
 final class Health implements HealthInterface
 {
+    /**
+     * @var Client
+     */
     private $client;
 
+    /**
+     * Health constructor.
+     * @param Client|null $client
+     */
     public function __construct(Client $client = null)
     {
         $this->client = $client ?: new Client();
     }
 
-    public function node($node, array $options = array())
+    /**
+     * @param $node
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function node($node, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
         );
 
-        return $this->client->get('/v1/health/node/'.$node, $params);
+        return $this->client->get('/v1/health/node/' . $node, $params);
     }
 
-    public function checks($service, array $options = array())
+    /**
+     * @param $service
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function checks($service, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
         );
 
-        return $this->client->get('/v1/health/checks/'.$service, $params);
+        return $this->client->get('/v1/health/checks/' . $service, $params);
     }
 
-    public function service($service, array $options = array())
+    /**
+     * @param $service
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function service($service, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc', 'tag', 'passing')),
         );
 
-        return $this->client->get('/v1/health/service/'.$service, $params);
+        return $this->client->get('/v1/health/service/' . $service, $params);
     }
 
-    public function state($state, array $options = array())
+    /**
+     * @param $state
+     * @param array $options
+     * @return ConsulResponse
+     */
+    public function state($state, array $options = array()): ConsulResponse
     {
         $params = array(
             'query' => OptionsResolver::resolve($options, array('dc')),
         );
 
-        return $this->client->get('/v1/health/state/'.$state, $params);
+        return $this->client->get('/v1/health/state/' . $state, $params);
     }
 }

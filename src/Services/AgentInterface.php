@@ -4,33 +4,39 @@
 namespace rabbit\consul\Services;
 
 
+use rabbit\consul\ConsulResponse;
+
+/**
+ * Interface AgentInterface
+ * @package rabbit\consul\Services
+ */
 interface AgentInterface
 {
     const SERVICE_NAME = 'agent';
 
-    public function checks();
+    public function checks(): ConsulResponse;
 
-    public function services();
+    public function services(): ConsulResponse;
 
-    public function members(array $options = array());
+    public function members(array $options = array()): ConsulResponse;
 
-    public function self();
+    public function self(): ConsulResponse;
 
-    public function join($address, array $options = array());
+    public function join($address, array $options = array()): ConsulResponse;
 
-    public function forceLeave($node);
+    public function forceLeave($node): ConsulResponse;
 
-    public function registerCheck($check);
+    public function registerCheck($check): ConsulResponse;
 
-    public function deregisterCheck($checkId);
+    public function deregisterCheck($checkId): ConsulResponse;
 
-    public function passCheck($checkId, array $options = array());
+    public function passCheck($checkId, array $options = array()): ConsulResponse;
 
-    public function warnCheck($checkId, array $options = array());
+    public function warnCheck($checkId, array $options = array()): ConsulResponse;
 
-    public function failCheck($checkId, array $options = array());
+    public function failCheck($checkId, array $options = array()): ConsulResponse;
 
-    public function registerService($service);
+    public function registerService($service): ConsulResponse;
 
-    public function deregisterService($serviceId);
+    public function deregisterService($serviceId): ConsulResponse;
 }
