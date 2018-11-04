@@ -1,0 +1,21 @@
+{
+  "name": "rabbit/consul",
+  "description": "rabbit consul",
+  "type": "library",
+  "require": {
+    "rabbit/framework": "dev-master",
+    "rabbit/httpclient": "dev-master"
+  },
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "albert",
+      "email": "63851587@qq.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "rabbit\\consul\\": "src/"
+    }
+  }
+}
