@@ -11,7 +11,7 @@ use rabbit\core\ObjectFactory;
  * Class Health
  * @package rabbit\consul\Services
  */
-final class Health
+final class Health extends AbstractService
 {
     const SERVICE_NAME = 'health';
     /**

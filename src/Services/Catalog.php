@@ -11,7 +11,7 @@ use rabbit\core\ObjectFactory;
  * Class Catalog
  * @package rabbit\consul\Services
  */
-final class Catalog
+final class Catalog extends AbstractService
 {
     const SERVICE_NAME = 'catalog';
     /**

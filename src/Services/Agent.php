@@ -11,7 +11,7 @@ use rabbit\core\ObjectFactory;
  * Class Agent
  * @package rabbit\consul\Services
  */
-final class Agent
+final class Agent extends AbstractService
 {
     const SERVICE_NAME = 'agent';
     /**

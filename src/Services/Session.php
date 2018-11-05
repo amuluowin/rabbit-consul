@@ -11,7 +11,7 @@ use rabbit\core\ObjectFactory;
  * Class Session
  * @package rabbit\consul\Services
  */
-final class Session
+final class Session extends AbstractService
 {
     const SERVICE_NAME = 'session';
     /** @var Client */

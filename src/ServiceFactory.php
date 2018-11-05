@@ -2,6 +2,7 @@
 
 namespace rabbit\consul;
 
+use rabbit\consul\Services\AbstractService;
 use rabbit\consul\Services\Agent;
 use rabbit\consul\Services\AgentInterface;
 use rabbit\consul\Services\Catalog;
@@ -28,19 +29,14 @@ final class ServiceFactory
     /**
      * @var array
      */
-    private $services = [];
-
-    /**
-     * @var array
-     */
-    private static $definition = array(
+    private $services = [
         // for backward compatibility:
         Agent::SERVICE_NAME => Agent::class,
         Catalog::SERVICE_NAME => Catalog::class,
         Health::SERVICE_NAME => Health::class,
         Session::SERVICE_NAME => Session::class,
         KV::SERVICE_NAME => KV::class,
-    );
+    ];
 
     /**
      * ServiceFactory constructor.
@@ -50,48 +46,23 @@ final class ServiceFactory
     public function __construct()
     {
         $this->client = new Client(ObjectFactory::get('httpclient'));
-        foreach (self::$definition as $name => $service) {
-            $this->services[$name] = new $service($this->client);
+    }
+
+    /**
+     * @param $service
+     * @return AbstractService
+     */
+    public function get($service): AbstractService
+    {
+        if (!array_key_exists($service, $this->services)) {
+            throw new \InvalidArgumentException(sprintf('The service "%s" is not available. Pick one among "%s".', $service, implode('", "', array_keys($this->services))));
         }
-    }
 
-    /**
-     * @return Agent
-     */
-    public function getAgent(): Agent
-    {
-        return $this->services[Agent::SERVICE_NAME];
-    }
+        if (is_string($this->services[$service])) {
+            $class = $this->services[$service];
+            $this->services[$service] = new $class($this->client);
+        }
 
-    /**
-     * @return Catalog
-     */
-    public function getCatalog(): Catalog
-    {
-        return $this->services[Catalog::SERVICE_NAME];
-    }
-
-    /**
-     * @return Health
-     */
-    public function getHealth(): Health
-    {
-        return $this->services[Health::SERVICE_NAME];
-    }
-
-    /**
-     * @return KV
-     */
-    public function getKV(): KV
-    {
-        return $this->services[KV::SERVICE_NAME];
-    }
-
-    /**
-     * @return Session
-     */
-    public function getSession(): Session
-    {
-        return $this->services[Session::SERVICE_NAME];
+        return $this->services[$service];
     }
 }
