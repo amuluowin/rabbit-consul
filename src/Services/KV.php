@@ -11,8 +11,9 @@ use rabbit\core\ObjectFactory;
  * Class KV
  * @package rabbit\consul\Services
  */
-final class KV implements KVInterface
+final class KV
 {
+    const SERVICE_NAME = 'kv';
     /**
      * @var Client
      */

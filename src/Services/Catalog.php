@@ -11,8 +11,9 @@ use rabbit\core\ObjectFactory;
  * Class Catalog
  * @package rabbit\consul\Services
  */
-final class Catalog implements CatalogInterface
+final class Catalog
 {
+    const SERVICE_NAME = 'catalog';
     /**
      * @var Client
      */

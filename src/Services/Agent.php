@@ -11,8 +11,9 @@ use rabbit\core\ObjectFactory;
  * Class Agent
  * @package rabbit\consul\Services
  */
-final class Agent implements AgentInterface
+final class Agent
 {
+    const SERVICE_NAME = 'agent';
     /**
      * @var Client
      */

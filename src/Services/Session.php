@@ -11,8 +11,10 @@ use rabbit\core\ObjectFactory;
  * Class Session
  * @package rabbit\consul\Services
  */
-final class Session implements SessionInterface
+final class Session
 {
+    const SERVICE_NAME = 'session';
+    /** @var Client */
     private $client;
 
     /**

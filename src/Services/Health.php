@@ -11,8 +11,9 @@ use rabbit\core\ObjectFactory;
  * Class Health
  * @package rabbit\consul\Services
  */
-final class Health implements HealthInterface
+final class Health
 {
+    const SERVICE_NAME = 'health';
     /**
      * @var Client
      */
