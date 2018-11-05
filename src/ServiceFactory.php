@@ -2,7 +2,6 @@
 
 namespace rabbit\consul;
 
-use Psr\Log\LoggerInterface;
 use rabbit\consul\Services\Agent;
 use rabbit\consul\Services\AgentInterface;
 use rabbit\consul\Services\Catalog;
@@ -13,7 +12,7 @@ use rabbit\consul\Services\KV;
 use rabbit\consul\Services\KVInterface;
 use rabbit\consul\Services\Session;
 use rabbit\consul\Services\SessionInterface;
-use Swlib\Saber;
+use rabbit\core\ObjectFactory;
 
 /**
  * Class ServiceFactory
@@ -51,12 +50,11 @@ final class ServiceFactory
     /**
      * ServiceFactory constructor.
      * @param array $options
-     * @param LoggerInterface|null $logger
-     * @param Saber|null $saber
+     * @param array $driver
      */
-    public function __construct(array $options = array(), LoggerInterface $logger = null, Saber $saber = null)
+    public function __construct()
     {
-        $this->client = new Client($options, $logger, $saber);
+        $this->client = new Client(ObjectFactory::get('httpclient'));
     }
 
     /**

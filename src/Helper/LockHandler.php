@@ -12,6 +12,7 @@ use rabbit\consul\Services\Session;
  */
 final class LockHandler
 {
+    /** @var string */
     private $key;
     private $value;
     private $session;
@@ -58,11 +59,11 @@ final class LockHandler
     }
 
     /**
-     *
+     * @return ConsulResponse
      */
     public function release(): ConsulResponse
     {
         $this->kv->delete($this->key);
-        $this->session->destroy($this->sessionId);
+        return $this->session->destroy($this->sessionId);
     }
 }

@@ -5,6 +5,7 @@ namespace rabbit\consul\Services;
 use rabbit\consul\Client;
 use rabbit\consul\ConsulResponse;
 use rabbit\consul\OptionsResolver;
+use rabbit\core\ObjectFactory;
 
 /**
  * Class Session
@@ -20,7 +21,7 @@ final class Session implements SessionInterface
      */
     public function __construct(Client $client = null)
     {
-        $this->client = $client ?: new Client();
+        $this->client = $client ?: new Client(ObjectFactory::get('httpclient'));
     }
 
     /**

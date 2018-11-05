@@ -1,6 +1,7 @@
 <?php
 
 namespace rabbit\consul;
+
 /**
  * Class ConsulResponse
  * @package rabbit\consul
@@ -32,23 +33,32 @@ final class ConsulResponse
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getHeaders(): array
     {
         return $this->headers;
     }
 
-    public function getBody()
+    /**
+     * @return string
+     */
+    public function getBody(): string
     {
         return $this->body;
     }
 
+    /**
+     * @return int
+     */
     public function getStatusCode(): int
     {
         return $this->status;
     }
 
+    /**
+     * @return array
+     */
     public function json(): array
     {
         return json_decode($this->body, true);
