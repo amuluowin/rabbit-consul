@@ -13,7 +13,6 @@ use rabbit\consul\Services\KV;
 use rabbit\consul\Services\KVInterface;
 use rabbit\consul\Services\Session;
 use rabbit\consul\Services\SessionInterface;
-use rabbit\core\ObjectFactory;
 
 /**
  * Class ServiceFactory
@@ -43,9 +42,9 @@ final class ServiceFactory
      * @param array $options
      * @param array $driver
      */
-    public function __construct()
+    public function __construct(\rabbit\httpclient\Client $client)
     {
-        $this->client = new Client(ObjectFactory::get('httpclient'));
+        $this->client = new Client($client);
     }
 
     /**

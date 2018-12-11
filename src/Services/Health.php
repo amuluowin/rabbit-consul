@@ -5,7 +5,6 @@ namespace rabbit\consul\Services;
 use rabbit\consul\Client;
 use rabbit\consul\ConsulResponse;
 use rabbit\consul\OptionsResolver;
-use rabbit\core\ObjectFactory;
 
 /**
  * Class Health
@@ -23,9 +22,9 @@ final class Health extends AbstractService
      * Health constructor.
      * @param Client|null $client
      */
-    public function __construct(Client $client = null)
+    public function __construct(Client $client)
     {
-        $this->client = $client ?: new Client(ObjectFactory::get('httpclient'));
+        $this->client = $client ;
     }
 
     /**
